@@ -1,26 +1,50 @@
-import React from "react";
-
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+import React, { useState } from "react";
 
 //create your first component
+const initialState = { label: "", done: false };
+
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+  const [tarea, setTarea] = useState(initialState);
+
+  const[lista, setLista] = useState([])
+
+  const handleChange = (event) => {
+    setTarea({
+      ...tarea,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const agregarTarea= (event)=>{
+	if(event.key=="Enter"){
+		setLista([
+			...lista,
+			tarea
+		])
+	}
+	console.log(event.key)
+  }
+
+
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-12 col-md-6">
+          <form onSubmit={(event)=>{event.preventDefault()}}>
+            <input>
+              className="form-control"
+              type="text"
+              placeholder="ingresar tarea"
+              name="label"
+			  value={tarea.label}
+			  onChange={handleChange}
+			  onKeyDown={agregarTarea}
+		</input>
+        </form>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Home;
